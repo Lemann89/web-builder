@@ -1,0 +1,29 @@
+.block {
+  border: 1px solid blue;
+  padding: 100px;
+  position: relative;
+}
+
+.actions {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}

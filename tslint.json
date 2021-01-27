@@ -118,7 +118,9 @@
         "check-operator",
         "check-separator",
         "check-type",
-        "check-typecast"
+        "check-typecast",
+        "check-module",
+        "check-preblock"
       ]
     },
     "component-class-suffix": true,
