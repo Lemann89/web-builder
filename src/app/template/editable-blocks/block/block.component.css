@@ -1,5 +1,6 @@
 .block {
   border: 1px solid blue;
+  background-color: rgba(0, 0, 255, 0.3);
   padding: 100px;
   position: relative;
 }

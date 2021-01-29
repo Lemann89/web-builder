@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { TemplateType } from '../../template-structure.type';
+import { TemplateType } from '../../template.models';
 
 @Component({
   selector: 'app-text-field',
@@ -26,9 +26,10 @@ export class TextFieldComponent implements OnInit {
 
   onFieldBlur(): void {
     this.field.nativeElement.removeAttribute('contenteditable');
+    this.structure.data.text = this.field.nativeElement.textContent;
+    console.log(this.structure.data.text);
   }
 
   onFieldInput(): void {
-    console.log(this.field.nativeElement.textContent);
   }
 }

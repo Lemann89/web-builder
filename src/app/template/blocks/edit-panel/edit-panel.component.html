@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="panel">
+    <div *ngIf="blockData.blockDirection">
+      <app-button label="column" theme="warning" (appButtonClickEvent)="changeBlockDirectionToColumn()"></app-button>
+      <app-button label="row" theme="warning" (appButtonClickEvent)="changeBlockDirectionToRow()"></app-button>
+    </div>
+  </div>
+  <div class="overlay" (click)="closeEditPanel()"></div>
+</div>

@@ -8,7 +8,8 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { TemplateType } from '../../template-structure.type';
+import { IEditableBlock, TemplateType } from '../../template.models';
+import { TemplateService } from '../../services/template.service';
 
 @Component({
   selector: 'app-block',
@@ -23,7 +24,9 @@ export class BlockComponent implements OnInit, AfterViewInit {
   structure: TemplateType;
   isMouseEnter = false;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver, private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,
+              private changeDetectorRef: ChangeDetectorRef,
+              private templateService: TemplateService) {
   }
 
   ngOnInit(): void {
@@ -53,7 +56,8 @@ export class BlockComponent implements OnInit, AfterViewInit {
     this.isMouseEnter = !this.isMouseEnter;
   }
 
-  clickOnButton(): void {
-    console.log('clicked');
+  clickOnSettingsButton(): void {
+    const editableBlock: IEditableBlock = (({childrenComponents, ...o}) => o)(this.structure);
+    this.templateService.editPanelSubject.next(editableBlock);
   }
 }

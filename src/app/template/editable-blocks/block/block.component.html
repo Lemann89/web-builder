@@ -1,9 +1,15 @@
-<div (mouseover)="toggleActions($event)" (mouseout)="toggleActions($event)" class="block"
-     [ngClass]="structure.data.flexDirection">
-  <div #actionsContainer class="actions" [ngClass]="isMouseEnter ? 'show' : 'hide'" (mouseenter)="showActions($event)">
-    <button class="uppercase px-8 py-2 rounded bg-blue-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg"
-            (click)="clickOnButton()">Settings
-    </button>
+<div (mouseover)="toggleActions($event)"
+     (mouseout)="toggleActions($event)"
+     [ngClass]="structure.data.blockDirection"
+     class="block">
+  <div #actionsContainer
+       [ngClass]="isMouseEnter ? 'show' : 'hide'"
+       class="actions"
+       (mouseenter)="showActions($event)">
+    <app-button label="Settings"
+                theme="primary"
+                (appButtonClickEvent)="clickOnSettingsButton()">
+    </app-button>
   </div>
   <ng-template #container></ng-template>
 </div>

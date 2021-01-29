@@ -1,0 +1,21 @@
+.panel {
+  position: fixed;
+  height: 100vh;
+  width: 20%;
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.container {
+  position: relative;
+}
+
+.overlay {
+  width: 80%;
+  left: 20%;
+  z-index: 2;
+  height: 100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.1);
+}

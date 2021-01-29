@@ -1,0 +1,23 @@
+.danger {
+  @apply uppercase px-8 py-2 rounded bg-red-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg;
+}
+
+.primary {
+  @apply uppercase px-8 py-2 rounded bg-blue-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg;
+}
+
+.warning {
+  @apply uppercase px-8 py-2 rounded bg-yellow-500 text-blue-50 max-w-max shadow-sm hover:shadow-lg;
+}
+
+.secondary {
+  @apply uppercase px-8 py-2 rounded bg-gray-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg;
+}
+
+.success {
+  @apply uppercase px-8 py-2 rounded bg-green-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg;
+}
+
+.outline {
+  @apply border bg-transparent border-blue-600;
+}
