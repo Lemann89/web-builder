@@ -1,14 +1,26 @@
 import { Type } from '@angular/core';
 
 export type TemplateType = {
-  componentType: Type<any>;
-  childrenComponents: TemplateType[];
+  blockType: Type<any>;
+  childrenBlocks: TemplateType[];
+  id: number;
+  data?: any;
+};
+
+export type TemplateTypeFromBackend = {
+  blockType: string;
+  childrenBlocks: TemplateTypeFromBackend[];
   id: number;
   data?: any;
 };
 
 export interface IEditableBlock {
   id: number;
-  componentType: Type<any>;
+  blockType: Type<any>;
+  data?: any;
+}
+
+export interface IActionComponent {
+  component: Type<any>;
   data?: any;
 }

@@ -6,10 +6,23 @@
        [ngClass]="isMouseEnter ? 'show' : 'hide'"
        class="actions"
        (mouseenter)="showActions($event)">
-    <app-button label="Settings"
-                theme="primary"
-                (appButtonClickEvent)="clickOnSettingsButton()">
-    </app-button>
+    <div class="block-actions">
+      <app-button
+                  theme="secondary-circle"
+                  (appButtonClickEvent)="openSettings()">
+        <fa-icon [icon]="faCog" [styles]="{'color': 'white'}"></fa-icon>
+      </app-button>
+      <app-button
+                  theme="success-circle"
+                  (appButtonClickEvent)="openCreateModal()">
+        <fa-icon [icon]="faPlus" [styles]="{'color': 'white'}"></fa-icon>
+      </app-button>
+      <app-button
+                  theme="danger-circle"
+                  (appButtonClickEvent)="deleteBlock()">
+        <fa-icon [icon]="faTrash" [styles]="{'color': 'white'}"></fa-icon>
+      </app-button>
+    </div>
   </div>
-  <ng-template #container></ng-template>
+  <ng-template #structureContainer></ng-template>
 </div>

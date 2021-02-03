@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-edit-panel',
@@ -7,19 +7,17 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class EditPanelComponent implements OnInit {
 
-  @Output() isClosed = new EventEmitter<boolean>();
-  @Input() blockData;
+  blockData;
+  onDestroy: () => void;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit(): void {
     console.log(this.blockData);
   }
 
   closeEditPanel(): void {
-    this.isClosed.emit(true);
-    this.blockData.style = 'red-500';
+    this.onDestroy();
   }
 
   changeBlockDirectionToRow(): void {

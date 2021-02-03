@@ -4,13 +4,15 @@ import {
   ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
+  ComponentRef,
   OnInit,
+  Type,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { MockService } from './services/mock.service';
 import { TemplateType } from './template.models';
 import { TemplateService } from './services/template.service';
+import { BlockService } from './services/block.service';
 
 @Component({
   selector: 'app-template',
@@ -20,35 +22,43 @@ import { TemplateService } from './services/template.service';
 })
 export class TemplateComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('container', {static: false, read: ViewContainerRef}) container: ViewContainerRef;
+  @ViewChild('structureContainer', {static: false, read: ViewContainerRef}) structureContainer: ViewContainerRef;
+  @ViewChild('actionsContainer', {static: false, read: ViewContainerRef}) actionsContainer: ViewContainerRef;
 
-  editableBlockData: any;
   structure: TemplateType;
-  isEditPanelOpen = false;
+  actionComponentRef: ComponentRef<any>;
 
-  constructor(private mockService: MockService,
-              private componentFactoryResolver: ComponentFactoryResolver,
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private changeDetectorRef: ChangeDetectorRef,
-              private templateService: TemplateService) {
+              private templateService: TemplateService,
+              private http: BlockService) {
   }
 
   ngOnInit(): void {
-    this.structure = this.mockService.getTemplateStructure();
-    this.templateService.editPanelSubject.subscribe(block => {
-      this.editableBlockData = block.data;
-      this.isEditPanelOpen = true;
+    this.templateService.blockActionsSubject.subscribe(res => {
+      const componentRef = this.buildComponent(res.component);
+      this.actionComponentRef = componentRef;
+      componentRef.instance.blockData = res.data;
+      // tslint:disable-next-line:only-arrow-functions
+      componentRef.instance.onDestroy = function(): void {
+        componentRef.destroy();
+      };
     });
   }
 
-  ngAfterViewInit(): void {
-    this.generateStructure();
+  async ngAfterViewInit(): Promise<void> {
+    this.structure = await this.http.getAll().toPromise();
+    this.generateBlockStructure();
   }
 
-  generateStructure(): void {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.structure.componentType);
-    const componentRef = this.container.createComponent(componentFactory);
+  buildComponent<T>(component: Type<T>): ComponentRef<T> {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+    return this.actionsContainer.createComponent(componentFactory);
+  }
+
+  generateBlockStructure(): void {
+    const componentRef = this.buildComponent(this.structure.blockType);
     componentRef.instance.structure = this.structure;
     this.changeDetectorRef.detectChanges();
   }
-
 }

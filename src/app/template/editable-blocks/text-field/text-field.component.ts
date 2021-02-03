@@ -1,5 +1,6 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TemplateType } from '../../template.models';
+import { BlockService } from '../../services/block.service';
 
 @Component({
   selector: 'app-text-field',
@@ -12,11 +13,9 @@ export class TextFieldComponent implements OnInit {
 
   structure: TemplateType;
 
-  constructor() {
-  }
+  constructor(private blockService: BlockService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 
   onFieldClick(): void {
@@ -27,9 +26,6 @@ export class TextFieldComponent implements OnInit {
   onFieldBlur(): void {
     this.field.nativeElement.removeAttribute('contenteditable');
     this.structure.data.text = this.field.nativeElement.textContent;
-    console.log(this.structure.data.text);
-  }
-
-  onFieldInput(): void {
+    this.blockService.updateData(this.structure.id, this.structure.data).subscribe();
   }
 }

@@ -1,0 +1,19 @@
+<div class="overlay" (click)="closeModal()">
+  <div class="modal" (click)="stopPropagation($event)">
+    <div class="header">
+      <span class="title">
+        Create new block
+      </span>
+      <div class="close-icon">
+        <fa-icon [icon]="faTimes" size="2x" (click)="closeModal()"></fa-icon>
+      </div>
+    </div>
+    <div class="body">
+      this is body
+    </div>
+    <div class="footer">
+      this is footer
+    </div>
+  </div>
+</div>
+

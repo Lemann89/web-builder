@@ -13,6 +13,7 @@
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
+            "showCircularDependencies": false,
             "extraWebpackConfig": "webpack.config.js",
             "outputPath": "dist/web-builder",
             "index": "src/index.html",

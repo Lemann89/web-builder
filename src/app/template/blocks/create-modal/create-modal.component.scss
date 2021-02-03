@@ -1,0 +1,35 @@
+.overlay {
+  width: 100%;
+  z-index: 4;
+  height: 100%;
+  top: 0;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal {
+  top: 10%;
+  left: calc(50% - 250px);
+  position: fixed;
+  z-index: 5;
+  width: 500px;
+  height: 400px;
+  border-radius: 5px;
+  background-color: white;
+  padding: 15px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.close-icon {
+  cursor: pointer;
+}
