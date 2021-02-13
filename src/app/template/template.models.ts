@@ -1,10 +1,23 @@
 import { Type } from '@angular/core';
 
+type Data = {
+  text?: string;
+  blockDirection?: string;
+  imageUrl?: string;
+  imageAlt?: string;
+};
+
+type Styles = {
+  width: number;
+  height: number;
+};
+
 export type TemplateType = {
   blockType: Type<any>;
   childrenBlocks: TemplateType[];
   id: number;
-  data?: any;
+  data?: Data;
+  styles?: Styles;
 };
 
 export type TemplateTypeFromBackend = {
@@ -12,15 +25,18 @@ export type TemplateTypeFromBackend = {
   childrenBlocks: TemplateTypeFromBackend[];
   id: number;
   data?: any;
+  styles?: any;
 };
 
-export interface IEditableBlock {
-  id: number;
-  blockType: Type<any>;
-  data?: any;
+interface INewBlockFormTemplateSelectOptions {
+  label: string;
+  value: string;
 }
 
-export interface INewBlockDialog {
-  component: Type<any>;
-  id: number;
+export interface INewBlockFormTemplate {
+  type: string;
+  formControlLabel: string;
+  label: string;
+  options?: Array<INewBlockFormTemplateSelectOptions>;
 }
+

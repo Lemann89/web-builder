@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TemplateType } from '../../template.models';
 
 @Component({
   selector: 'app-image',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImageComponent implements OnInit {
 
-  constructor() { }
+  structure: TemplateType;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
+    console.log(this.structure);
   }
 
 }

@@ -14,10 +14,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BlockSettingsSidenavComponent } from './components/block-settings-sidenav/block-settings-sidenav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImageComponent } from './blocks/image/image.component';
+import { NewBlockFormControlsComponent } from './components/new-block-form-controls/new-block-form-controls.component';
 
 
 @NgModule({
-  declarations: [TemplateComponent, TextFieldComponent, BlockComponent, NewBlockDialogComponent, BlockSettingsSidenavComponent, ImageComponent],
+  declarations: [
+    TemplateComponent,
+    TextFieldComponent,
+    BlockComponent,
+    NewBlockDialogComponent,
+    BlockSettingsSidenavComponent,
+    ImageComponent,
+    NewBlockFormControlsComponent
+  ],
   exports: [
     TemplateComponent
   ],

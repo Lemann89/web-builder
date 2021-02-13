@@ -4,23 +4,65 @@
     <div class="wrapper">
       <mat-form-field>
         <mat-label>Block type</mat-label>
-        <mat-select formControlName="blockType">
+        <mat-select formControlName="blockType" (selectionChange)="blockTypeChange($event)">
           <mat-option value="Block">Block</mat-option>
-          <mat-option value="TextField">Text Field</mat-option>
+          <mat-option value="Text">Text Field</mat-option>
+          <mat-option value="Image">Image</mat-option>
         </mat-select>
       </mat-form-field>
-      <div formGroupName="data">
-        <mat-form-field *ngIf="form.value.blockType === 'TextField'">
-          <mat-label>Text</mat-label>
-          <input matInput formControlName="text">
-        </mat-form-field>
-        <mat-form-field *ngIf="form.value.blockType === 'Block'">
-          <mat-label>Block direction</mat-label>
-          <mat-select formControlName="blockDirection">
-            <mat-option value="column">Column</mat-option>
-            <mat-option value="row">Row</mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div formGroupName="styles" *ngIf="form.get('styles')">
+        <div *ngFor="let formElement of newBlockService.commonStylesFormTemplate">
+          <div [ngSwitch]="formElement.type">
+            <div *ngSwitchCase="'Number'">
+              <mat-form-field>
+                <mat-label>{{formElement.label}}</mat-label>
+                <input type="number" matInput formControlName="{{formElement.formControlLabel}}">
+              </mat-form-field>
+            </div>
+            <div *ngSwitchCase="'Text'">
+              <mat-form-field>
+                <mat-label>{{formElement.label}}</mat-label>
+                <input matInput formControlName="{{formElement.formControlLabel}}">
+              </mat-form-field>
+            </div>
+            <div *ngSwitchCase="'Select'">
+              <mat-form-field>
+                <mat-label>{{formElement.label}}</mat-label>
+                <mat-select formControlName="{{formElement.formControlLabel}}">
+                  <mat-option *ngFor="let option of formElement.options"
+                              value="{{option.value}}">{{option.label}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div formGroupName="data" *ngIf="form.get('data')">
+        <div *ngFor="let formElement of newBlockService.createFormTemplateMap().get(blockTypeValue)">
+          <div [ngSwitch]="formElement.type">
+            <div *ngSwitchCase="'Number'">
+              <mat-form-field>
+                <mat-label>{{formElement.label}}</mat-label>
+                <input type="number" matInput formControlName="{{formElement.formControlLabel}}">
+              </mat-form-field>
+            </div>
+            <div *ngSwitchCase="'Text'">
+              <mat-form-field>
+                <mat-label>{{formElement.label}}</mat-label>
+                <input matInput formControlName="{{formElement.formControlLabel}}">
+              </mat-form-field>
+            </div>
+            <div *ngSwitchCase="'Select'">
+              <mat-form-field>
+                <mat-label>{{formElement.label}}</mat-label>
+                <mat-select formControlName="{{formElement.formControlLabel}}">
+                  <mat-option *ngFor="let option of formElement.options"
+                              value="{{option.value}}">{{option.label}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </mat-dialog-content>

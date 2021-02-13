@@ -1,0 +1,27 @@
+<div formGroupName="data" *ngIf="form.get('data')">
+  <div *ngFor="let formElement of newBlockService.blockFormTemplate">
+    <div [ngSwitch]="formElement.type">
+      <div *ngSwitchCase="'Number'">
+        <mat-form-field>
+          <mat-label>{{formElement.label}}</mat-label>
+          <input type="number" matInput formControlName="{{formElement.formControlLabel}}">
+        </mat-form-field>
+      </div>
+      <div *ngSwitchCase="'Text'">
+        <mat-form-field>
+          <mat-label>{{formElement.label}}</mat-label>
+          <input matInput formControlName="{{formElement.formControlLabel}}">
+        </mat-form-field>
+      </div>
+      <div *ngSwitchCase="'Select'">
+        <mat-form-field>
+          <mat-label>{{formElement.label}}</mat-label>
+          <mat-select formControlName="{{formElement.formControlLabel}}">
+            <mat-option *ngFor="let option of formElement.options"
+                        value="{{option.value}}">{{option.label}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>

@@ -24,6 +24,7 @@ export class BlockService {
       return {
         id: templateType.id,
         data: templateType.data,
+        styles: templateType.styles,
         blockType: getComponentType(templateType.blockType),
         childrenBlocks: templateType.childrenBlocks.map(block => transformBlockType(block))
       };
