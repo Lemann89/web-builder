@@ -20,7 +20,7 @@ export interface IEditableBlock {
   data?: any;
 }
 
-export interface IActionComponent {
+export interface INewBlockDialog {
   component: Type<any>;
-  data?: any;
+  id: number;
 }

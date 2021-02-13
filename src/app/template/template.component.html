@@ -1,4 +1,12 @@
-<ng-template #actionsContainer></ng-template>
-<div class="container">
-  <ng-template #structureContainer></ng-template>
-</div>
+<mat-sidenav-container class="example-container">
+
+  <mat-sidenav #sidenav mode="over">
+    <app-block-settings-sidenav></app-block-settings-sidenav>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <ng-template #structureContainer></ng-template>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+

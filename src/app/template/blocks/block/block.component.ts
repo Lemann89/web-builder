@@ -7,11 +7,12 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { IEditableBlock, TemplateType } from '../../template.models';
+import { TemplateType } from '../../template.models';
 import { TemplateService } from '../../services/template.service';
 import { faPlus, faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { EditPanelComponent } from '../../blocks/edit-panel/edit-panel.component';
-import { CreateModalComponent } from '../../blocks/create-modal/create-modal.component';
+import { NewBlockDialogComponent } from '../../components/new-block-dialog/new-block-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { BlockService } from '../../services/block.service';
 
 @Component({
   selector: 'app-block',
@@ -24,6 +25,7 @@ export class BlockComponent implements OnInit, AfterViewInit {
   @ViewChild('actionsContainer', {static: false}) actionsContainer: ElementRef;
 
   structure: TemplateType;
+  sidenav: any;
   isMouseEnter = false;
   faPlus = faPlus;
   faCog = faCog;
@@ -31,9 +33,13 @@ export class BlockComponent implements OnInit, AfterViewInit {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private changeDetectorRef: ChangeDetectorRef,
-              private templateService: TemplateService) {}
+              private templateService: TemplateService,
+              private blockService: BlockService,
+              public dialog: MatDialog) {
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   ngAfterViewInit(): void {
     this.generateStructure();
@@ -59,13 +65,25 @@ export class BlockComponent implements OnInit, AfterViewInit {
   }
 
   openSettings(): void {
-    const editableBlock: IEditableBlock = (({childrenBlocks, ...other}) => other)(this.structure);
-    this.templateService.blockActionsSubject.next({component: EditPanelComponent, data: editableBlock.data});
+    this.templateService.blockSettingsSubject.next(this.structure);
   }
 
-  openCreateModal(): void {
-    this.templateService.blockActionsSubject.next({component: CreateModalComponent});
+  openNewBlockModal(): void {
+    const dialogRef = this.dialog.open(NewBlockDialogComponent, {
+      data: {
+        blockId: this.structure.id
+      }
+    });
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
-  deleteBlock(): void {}
+  deleteBlock(): void {
+    this.blockService.delete(this.structure.id).subscribe(res => {
+      this.templateService.getAllBlocksSubject.next(res);
+    });
+  }
 }

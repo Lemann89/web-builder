@@ -11,7 +11,8 @@ import { blockTypeMap } from '../block.map';
 })
 export class BlockService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getAll(): Observable<TemplateType> {
 
@@ -34,5 +35,13 @@ export class BlockService {
 
   updateData(id: number, data: any): Observable<any> {
     return this.http.put<Observable<any>>(`${environment.BaseURL}/blocks/${id}/data`, data);
+  }
+
+  create(body: any): Observable<any> {
+    return this.http.post<Observable<any>>(`${environment.BaseURL}/blocks`, body);
+  }
+
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${environment.BaseURL}/blocks/${id}`);
   }
 }

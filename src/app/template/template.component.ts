@@ -13,6 +13,7 @@ import {
 import { TemplateType } from './template.models';
 import { TemplateService } from './services/template.service';
 import { BlockService } from './services/block.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-template',
@@ -23,41 +24,39 @@ import { BlockService } from './services/block.service';
 export class TemplateComponent implements OnInit, AfterViewInit {
 
   @ViewChild('structureContainer', {static: false, read: ViewContainerRef}) structureContainer: ViewContainerRef;
-  @ViewChild('actionsContainer', {static: false, read: ViewContainerRef}) actionsContainer: ViewContainerRef;
+  @ViewChild('sidenav', {static: false}) sidenav: any;
 
   structure: TemplateType;
-  actionComponentRef: ComponentRef<any>;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private changeDetectorRef: ChangeDetectorRef,
               private templateService: TemplateService,
-              private http: BlockService) {
+              private block: BlockService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.templateService.blockActionsSubject.subscribe(res => {
-      const componentRef = this.buildComponent(res.component);
-      this.actionComponentRef = componentRef;
-      componentRef.instance.blockData = res.data;
-      // tslint:disable-next-line:only-arrow-functions
-      componentRef.instance.onDestroy = function(): void {
-        componentRef.destroy();
-      };
+    this.templateService.blockSettingsSubject.subscribe(_ => {
+      this.sidenav.toggle();
+    });
+
+    this.templateService.getAllBlocksSubject.subscribe((_) => {
+      this.block.getAll().subscribe(res => {
+        this.structure = res;
+        this.structureContainer.clear();
+        this.generateBlockStructure();
+      });
     });
   }
 
   async ngAfterViewInit(): Promise<void> {
-    this.structure = await this.http.getAll().toPromise();
+    this.structure = await this.block.getAll().toPromise();
     this.generateBlockStructure();
   }
 
-  buildComponent<T>(component: Type<T>): ComponentRef<T> {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
-    return this.actionsContainer.createComponent(componentFactory);
-  }
-
   generateBlockStructure(): void {
-    const componentRef = this.buildComponent(this.structure.blockType);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.structure.blockType);
+    const componentRef = this.structureContainer.createComponent(componentFactory);
     componentRef.instance.structure = this.structure;
     this.changeDetectorRef.detectChanges();
   }

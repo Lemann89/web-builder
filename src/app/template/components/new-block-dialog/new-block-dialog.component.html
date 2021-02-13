@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Create new block</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="mat-typography">
+    <div class="wrapper">
+      <mat-form-field>
+        <mat-label>Block type</mat-label>
+        <mat-select formControlName="blockType">
+          <mat-option value="Block">Block</mat-option>
+          <mat-option value="TextField">Text Field</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div formGroupName="data">
+        <mat-form-field *ngIf="form.value.blockType === 'TextField'">
+          <mat-label>Text</mat-label>
+          <input matInput formControlName="text">
+        </mat-form-field>
+        <mat-form-field *ngIf="form.value.blockType === 'Block'">
+          <mat-label>Block direction</mat-label>
+          <mat-select formControlName="blockDirection">
+            <mat-option value="column">Column</mat-option>
+            <mat-option value="row">Row</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" mat-dialog-close type="submit">Create</button>
+  </mat-dialog-actions>
+</form>
+
