@@ -1,5 +1,5 @@
-<div formGroupName="data" *ngIf="form.get('data')">
-  <div *ngFor="let formElement of newBlockService.blockFormTemplate">
+<div [formGroup]="form">
+  <div *ngFor="let formElement of formTemplate">
     <div [ngSwitch]="formElement.type">
       <div *ngSwitchCase="'Number'">
         <mat-form-field>

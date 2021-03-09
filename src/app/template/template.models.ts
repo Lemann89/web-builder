@@ -40,3 +40,4 @@ export interface INewBlockFormTemplate {
   options?: Array<INewBlockFormTemplateSelectOptions>;
 }
 
+export type BlockTypes = 'Block' | 'Image' | 'Text';
